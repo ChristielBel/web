@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Website</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center">Form</h1>
+    <form action="/" method="POST">
+
+        <div class="form-group">
+            <label for="field-name-1">ФИО:</label>
+            <input id="field-name-1" name="field-name-1" type="text" class="form-control" placeholder="Введите ваше ФИО">
+        </div>
+
+        <div class="form-group">
+            <label for="field-name-2">Телефон:</label>
+            <input id="field-name-2" name="field-name-2" type="tel" class="form-control" placeholder="Введите ваш номер телефона">
+        </div>
+
+        <div class="form-group">
+            <label for="field-email">Email:</label>
+            <input id="field-email" name="field-email" type="email" class="form-control" placeholder="Введите вашу почту">
+        </div>
+
+        <div class="form-group">
+            <label for="field-date">Дата рождения:</label><br>
+            <input id="field-date" name="field-date" value="2023-08-19" type="date" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Пол:</label><br>
+            <label class="radio-inline"><input type="radio" checked="checked" name="radio-group-1" value="Значение1"> Мужской</label>
+            <label class="radio-inline"><input type="radio" name="radio-group-1" value="Значение2"> Женский</label>
+        </div>
+
+        <div class="form-group">
+            <label for="select">Любимый язык программирования:</label><br>
+            <select id="select" name="select" multiple class="form-control">
+                <option value="Значение1">Pascal</option>
+                <option value="Значение2" selected>C++</option>
+                <option value="Значение3" selected>C</option>
+                <option value="Значение4" selected>JavaScript</option>
+                <option value="Значение5" selected>PHP</option>
+                <option value="Значение6" selected>Python</option>
+                <option value="Значение7" selected>Java</option>
+                <option value="Значение8" selected>Haskel</option>
+                <option value="Значение9" selected>Clojure</option>
+                <option value="Значение10" selected>Prolog</option>
+                <option value="Значение11" selected>Scala</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="field-message">Биография:</label>
+            <textarea id="field-message" name="field-message" class="form-control" rows="3" placeholder="Введите ваше сообщение"></textarea>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check-1">
+            <label class="form-check-label" for="check-1">C контрактом ознакомлен(а)</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+
+</body>
+</html>
