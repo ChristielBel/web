@@ -20,12 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // Проверяем ошибки.
 $errors = FALSE;
-if (empty($_POST['fio'])) {
+if (empty($_POST['field-name-1'])) {
   print('Заполните имя.<br/>');
   $errors = TRUE;
 }
 
-if (empty($_POST['year']) || !is_numeric($_POST['year']) || !preg_match('/^\d+$/', $_POST['year'])) {
+if (empty($_POST['field-date']) || !is_numeric($_POST['field-date']) || !preg_match('/^\d+$/', $_POST['field-date'])) {
   print('Заполните год.<br/>');
   $errors = TRUE;
 }
