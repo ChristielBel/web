@@ -19,26 +19,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 
 // Проверяем ошибки.
-//$errors = FALSE;
-//if (empty($_POST['field-name-1'])) {
-//  print('Заполните имя.<br/>');
-//  $errors = TRUE;
-//}
-//
-//if (empty($_POST['field-date']) || !is_numeric($_POST['field-date']) || !preg_match('/^\d+$/', $_POST['field-date'])) {
-//  print('Заполните год.<br/>');
-//  $errors = TRUE;
-//}
-//
-//
-//// *************
-//// Тут необходимо проверить правильность заполнения всех остальных полей.
-//// *************
-//
-//if ($errors) {
-//  // При наличии ошибок завершаем работу скрипта.
-//  exit();
-//}
+$errors = array();
+
+// Проверка поля ФИО
+if (empty($_POST['name']) || strlen($_POST['name']) > 150 || !preg_match('/^[a-zA-Zа-яА-Я\s]+$/', $_POST['name'])) {
+    $errors[] = 'Поле ФИО должно содержать только буквы и пробелы и быть не длиннее 150 символов.';
+}
+
+// Проверка поля Телефон
+if (empty($_POST['telephone']) || !preg_match('/^\+?[0-9()\s-]+$/', $_POST['telephone'])) {
+    $errors[] = 'Введите корректный номер телефона.';
+}
+
+// Проверка поля Email
+if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    $errors[] = 'Введите корректный email адрес.';
+}
+
+// Проверка поля Дата рождения
+if (empty($_POST['birthday'])) {
+    $errors[] = 'Введите вашу дату рождения.';
+}
+
+// Проверка поля Пол
+$validGenders = array('Male', 'Female'); // допустимые значения для поля Пол
+if (empty($_POST['gender']) || !in_array($_POST['gender'], $validGenders)) {
+    $errors[] = 'Выберите ваш пол из предопределенных вариантов.';
+}
+
+// Проверка поля Любимый язык программирования
+if (empty($_POST['language']) || count($_POST['language']) < 1) {
+    $errors[] = 'Выберите хотя бы один язык программирования.';
+}
+
+// Проверка поля Биография
+if (empty($_POST['biography']) || strlen($_POST['biography']) < 10) {
+    $errors[] = 'Введите вашу биографию (не менее 10 символов).';
+}
+
+// Проверка чекбокса ознакомления с контрактом
+if (!isset($_POST['check'])) {
+    $errors[] = 'Для продолжения необходимо ознакомиться с контрактом.';
+}
+
+if (!empty($errors)) {
+    foreach ($errors as $error) {
+        echo $error . '<br>';
+    }
+    exit();
+}
 
 // Сохранение в базу данных.
 
@@ -64,7 +93,7 @@ values (?, ?, ?, ?, ?, ?)';
     $userId = $db->lastInsertId();
 
     $languageQuery = 'select id from languages where language = ?';
-    $linkQuery =  'insert into clients_languages (clients_id, languages_id) values (?, ?)';
+    $linkQuery = 'insert into clients_languages (clients_id, languages_id) values (?, ?)';
     $languageStatement = $db->prepare($languageQuery);
     $linkStatement = $db->prepare($linkQuery);
     foreach ($_POST['language'] as $language) {
@@ -73,8 +102,7 @@ values (?, ?, ?, ?, ?, ?)';
         $linkStatement->execute([$userId, $languageId]);
     }
 
-}
-catch(PDOException $e){
+} catch (PDOException $e) {
     print('Error : ' . $e->getMessage());
     exit();
 }
