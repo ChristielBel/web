@@ -10,58 +10,58 @@
 
 <div class="container">
     <h1 class="text-center">Form</h1>
-    <form action="/" method="POST">
+    <form action="" method="POST">
 
         <div class="form-group">
-            <label for="field-name-1">ФИО:</label>
-            <input id="field-name-1" name="field-name-1" type="text" class="form-control" placeholder="Введите ваше ФИО">
+            <label for="name">ФИО:</label>
+            <input id="name" name="name" type="text" class="form-control" placeholder="Введите ваше ФИО" required>
         </div>
 
         <div class="form-group">
-            <label for="field-name-2">Телефон:</label>
-            <input id="field-name-2" name="field-name-2" type="tel" class="form-control" placeholder="Введите ваш номер телефона">
+            <label for="telephone">Телефон:</label>
+            <input id="telephone" name="telephone" type="tel" class="form-control" placeholder="Введите ваш номер телефона" required>
         </div>
 
         <div class="form-group">
-            <label for="field-email">Email:</label>
-            <input id="field-email" name="field-email" type="email" class="form-control" placeholder="Введите вашу почту">
+            <label for="email">Email:</label>
+            <input id="email" name="email" type="email" class="form-control" placeholder="Введите вашу почту" required>
         </div>
 
         <div class="form-group">
-            <label for="field-date">Дата рождения:</label><br>
-            <input id="field-date" name="field-date" value="2023-08-19" type="date" class="form-control">
+            <label for="birthday">Дата рождения:</label><br>
+            <input id="birthday" name="birthday" value="2023-08-19" type="date" class="form-control" required>
         </div>
 
         <div class="form-group">
             <label>Пол:</label><br>
-            <label class="radio-inline"><input type="radio" checked="checked" name="radio-group-1" value="Значение1"> Мужской</label>
-            <label class="radio-inline"><input type="radio" name="radio-group-1" value="Значение2"> Женский</label>
+            <label class="radio-inline"><input type="radio" checked="checked" name="gender" value="Male" required> Мужской</label>
+            <label class="radio-inline"><input type="radio" name="gender" value="Female" required> Женский</label>
         </div>
 
         <div class="form-group">
-            <label for="select">Любимый язык программирования:</label><br>
-            <select id="select" name="select" multiple class="form-control">
-                <option value="Значение1">Pascal</option>
-                <option value="Значение2" selected>C++</option>
-                <option value="Значение3" selected>C</option>
-                <option value="Значение4" selected>JavaScript</option>
-                <option value="Значение5" selected>PHP</option>
-                <option value="Значение6" selected>Python</option>
-                <option value="Значение7" selected>Java</option>
-                <option value="Значение8" selected>Haskel</option>
-                <option value="Значение9" selected>Clojure</option>
-                <option value="Значение10" selected>Prolog</option>
-                <option value="Значение11" selected>Scala</option>
+            <label for="language">Любимый язык программирования:</label><br>
+            <select id="language" name="language[]" multiple class="form-control" required>
+                <option value="Pascal">Pascal</option>
+                <option value="C++">C++</option>
+                <option value="C">C</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="PHP">PHP</option>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="Haskel">Haskel</option>
+                <option value="Clojure">Clojure</option>
+                <option value="Prolog">Prolog</option>
+                <option value="Scala">Scala</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="field-message">Биография:</label>
-            <textarea id="field-message" name="field-message" class="form-control" rows="3" placeholder="Введите ваше сообщение"></textarea>
+            <label for="biography">Биография:</label>
+            <textarea id="biography" name="biography" class="form-control" rows="3" placeholder="Введите ваше сообщение" required></textarea>
         </div>
 
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="check-1">
+            <input type="checkbox" class="form-check-input" id="check-1" required>
             <label class="form-check-label" for="check-1">C контрактом ознакомлен(а)</label>
         </div>
 
