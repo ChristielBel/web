@@ -71,6 +71,8 @@ $pass = '3328006'; // Заменить на пароль, такой же, ка�
 $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
+$errors = FALSE;
+
 if (isset($_POST['language'])) {
     $invalidOptions = array_diff($_POST['language'], $validOptions);
     if (!empty($invalidOptions)) {
