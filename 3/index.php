@@ -47,11 +47,6 @@ if (empty($_POST['gender']) || !in_array($_POST['gender'], $validGenders)) {
     $errors[] = 'Выберите ваш пол из предопределенных вариантов.';
 }
 
-// Проверка поля Любимый язык программирования
-if (empty($_POST['language']) || count($_POST['language']) < 1) {
-    $errors[] = 'Выберите хотя бы один язык программирования.';
-}
-
 // Проверка поля Биография
 if (empty($_POST['biography']) || strlen($_POST['biography']) < 10) {
     $errors[] = 'Введите вашу биографию (не менее 10 символов).';
