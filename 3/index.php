@@ -55,15 +55,16 @@ if (empty($_POST['gender']) || !in_array($_POST['gender'], $validGenders)) {
 }
 
 // Проверка поля Любимый язык программирования
-if (empty($_POST['language']) || count($_POST['language']) < 1) {
-    $errors[] = 'Выберите хотя бы один язык программирования.';
-}
-
 if (isset($_POST['language'])) {
     $invalidOptions = array_diff($_POST['language'], $validOptions);
     if (!empty($invalidOptions)) {
         $errors[]='Неккоректно выбраны языки программирования.';
     }
+}
+else{
+if (empty($_POST['language']) || count($_POST['language']) < 1) {
+    $errors[] = 'Выберите хотя бы один язык программирования.';
+}
 }
 
 // Проверка поля Биография
