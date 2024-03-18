@@ -57,13 +57,6 @@ if (!isset($_POST['check'])) {
     $errors[] = 'Для продолжения необходимо ознакомиться с контрактом.';
 }
 
-if (!empty($errors)) {
-    foreach ($errors as $error) {
-        echo $error . '<br>';
-    }
-    exit();
-}
-
 // Сохранение в базу данных.
 
 $user = 'u67287'; // Заменить на ваш логин uXXXXX
@@ -71,21 +64,21 @@ $pass = '3328006'; // Заменить на пароль, такой же, ка�
 $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
-$errors = FALSE;
-
 if (isset($_POST['language'])) {
     $invalidOptions = array_diff($_POST['language'], $validOptions);
     if (!empty($invalidOptions)) {
-        print('Неккоректно выбраны языки программирования.<br/>');
+        $errors[] ='Неккоректно выбраны языки программирования.';
         $errors = TRUE;
     }
 }
 else {
-    print('Выберите языки программирования.<br/>');
-    $errors = TRUE;
+    $errors[] ='Выберите языки программирования.';
 }
 
-if ($errors) {
+if (!empty($errors)) {
+    foreach ($errors as $error) {
+        echo $error . '<br>';
+    }
     exit();
 }
 
