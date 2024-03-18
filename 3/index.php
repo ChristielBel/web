@@ -18,13 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 
-// Сохранение в базу данных.
-
-$user = 'u67287'; // Заменить на ваш логин uXXXXX
-$pass = '3328006'; // Заменить на пароль, такой же, как от SSH
-$db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
-    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
 // Проверяем ошибки.
 $errors = array();
 
@@ -55,16 +48,8 @@ if (empty($_POST['gender']) || !in_array($_POST['gender'], $validGenders)) {
 }
 
 // Проверка поля Любимый язык программирования
-if (isset($_POST['language'])) {
-    $invalidOptions = array_diff($_POST['language'], $validOptions);
-    if (!empty($invalidOptions)) {
-        $errors[]='Неккоректно выбраны языки программирования.';
-    }
-}
-else{
 if (empty($_POST['language']) || count($_POST['language']) < 1) {
     $errors[] = 'Выберите хотя бы один язык программирования.';
-}
 }
 
 // Проверка поля Биография
@@ -81,6 +66,29 @@ if (!empty($errors)) {
     foreach ($errors as $error) {
         echo $error . '<br>';
     }
+    exit();
+}
+
+// Сохранение в базу данных.
+
+$user = 'u67287'; // Заменить на ваш логин uXXXXX
+$pass = '3328006'; // Заменить на пароль, такой же, как от SSH
+$db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+
+if (isset($_POST['language'])) {
+    $invalidOptions = array_diff($_POST['language'], $validOptions);
+    if (!empty($invalidOptions)) {
+        print('Неккоректно выбраны языки программирования.<br/>');
+        $errors = TRUE;
+    }
+}
+else {
+    print('Выберите языки программирования.<br/>');
+    $errors = TRUE;
+}
+
+if ($errors) {
     exit();
 }
 
