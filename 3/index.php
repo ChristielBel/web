@@ -55,8 +55,7 @@ if (empty($_POST['language']) || count($_POST['language']) < 1) {
 if (isset($_POST['language'])) {
     $invalidOptions = array_diff($_POST['language'], $validOptions);
     if (!empty($invalidOptions)) {
-        print('Неверно выбраны языки программирования.<br/>');
-        $errors = TRUE;
+        $errors[]='Неккоректно выбраны языки программирования.';
     }
 }
 
