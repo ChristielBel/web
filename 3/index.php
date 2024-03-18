@@ -52,6 +52,14 @@ if (empty($_POST['language']) || count($_POST['language']) < 1) {
     $errors[] = 'Выберите хотя бы один язык программирования.';
 }
 
+if (isset($_POST['language'])) {
+    $invalidOptions = array_diff($_POST['language'], $validOptions);
+    if (!empty($invalidOptions)) {
+        print('Неверно выбраны языки программирования.<br/>');
+        $errors = TRUE;
+    }
+}
+
 // Проверка поля Биография
 if (empty($_POST['biography']) || strlen($_POST['biography']) < 10) {
     $errors[] = 'Введите вашу биографию (не менее 10 символов).';
