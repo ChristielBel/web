@@ -58,9 +58,9 @@ if (!isset($_POST['check'])) {
 
 // Сохранение в базу данных.
 
-$user = 'u67287'; // Заменить на ваш логин uXXXXX
-$pass = '3328006'; // Заменить на пароль, такой же, как от SSH
-$db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
+$user = 'uXXXXX'; // Заменить на ваш логин uXXXXX
+$pass = 'password'; // Заменить на пароль, такой же, как от SSH
+$db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
 $statement = $db->prepare("select language from languages");
