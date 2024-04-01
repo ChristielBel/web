@@ -8,14 +8,18 @@ header('Content-Type: text/html; charset=UTF-8');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Массив для временного хранения сообщений пользователю.
     $messages = array();
-    // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
-    // Выдаем сообщение об успешном сохранении.
     if (!empty($_COOKIE['save'])) {
-        // Удаляем куку, указывая время устаревания в прошлом.
-        setcookie('save', '', 100000);
-        // Если есть параметр save, то выводим сообщение пользователю.
-        $messages[] = 'Спасибо, результаты сохранены.';
-    }
+            setcookie('save', '', 100000);
+            setcookie('login', '', 100000);
+            setcookie('pass', '', 100000);
+            $messages[] = 'Спасибо, результаты сохранены.';
+            if (!empty($_COOKIE['pass'])) {
+                $messages[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
+            и паролем <strong>%s</strong> для изменения данных.',
+                    strip_tags($_COOKIE['login']),
+                    strip_tags($_COOKIE['pass']));
+            }
+        }
 
     // Складываем признак ошибок в массив.
     $errors = array();
@@ -95,6 +99,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     foreach ($statement as $row) {
         $validOptions[] = $row['language'];
     }
+
+     // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
+        // ранее в сессию записан факт успешного логина.
+        if (empty($errors) && !empty($_COOKIE[session_name()]) &&
+            session_start() && !empty($_SESSION['login'])) {
+            // TODO: загрузить данные пользователя из БД
+            // и заполнить переменную $values,
+            // предварительно санитизовав.
+
+            $user = 'u67287';
+            $pass = '3328006';
+            $db = new PDO('mysql:host=localhost;dbname=u67321', $user, $pass,
+                [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            try {
+                $userStmt = $db->prepare("select a.* from users a join usert5 b on a.user_id = b.id where b.id = ?");
+                $userStmt->execute([$_SESSION['id']]);
+                $row = $userStmt->fetch();
+
+                $values['name'] = strip_tags($_COOKIE['name_value']);
+                $values['telephone'] = strip_tags($_COOKIE['telephone_value']);
+                $values['email'] = strip_tags($_COOKIE['email_value']);
+                $values['birthday'] = strip_tags($_COOKIE['birthday_value']);
+                $values['gender'] = strip_tags($_COOKIE['gender_value']);
+                $values['biography'] = strip_tags($_COOKIE['biography_value']);
+                $values['checkk'] = strip_tags($_COOKIE['checkk_value']);
+
+                $testStatement = $db->prepare("select language from languages");
+                $testStatement->execute();
+                $pLang = [];
+                foreach ($testStatement as $row) {
+                    $pLang[] = strip_tags($row['language']);
+                }
+
+                $values['language'] = $pLang;
+            } catch (PDOException $e) {
+                print('Error : ' . $e->getMessage());
+                exit();
+            }
+
+            printf('Вход с логином %s, id %d', $_SESSION['login'], $_SESSION['id']);
+        }
+
 // Включаем содержимое файла form.php.
 // В нем будут доступны переменные $messages, $errors и $values для вывода
 // сообщений, полей с ранее заполненными данными и признаками ошибок.

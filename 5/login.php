@@ -43,16 +43,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
     // TODO: Проверть есть ли такой логин и пароль в базе данных.
-    // Выдать сообщение об ошибках.
+        // Выдать сообщение об ошибках.
 
-    if (!$session_started) {
-        session_start();
-    }
-    // Если все ок, то авторизуем пользователя.
-    $_SESSION['login'] = $_POST['login'];
-    // Записываем ID пользователя.
-    $_SESSION['uid'] = 123;
+        $isAuth = FALSE;
+        $userId = -1;
+        $user = 'u67287';
+        $pass = '3328006';
+        $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
+            [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        try {
+            $userQuery = 'select * from usert5 where login = ? and password = ?';
+            $userStatement = $db->prepare($userQuery);
+            $userStatement->execute();
 
-    // Делаем перенаправление.
-    header('Location: ./');
+            $userInfo = $userStatement->fetch();
+            if ($_POST['login'] == $userInfo['login'] &&
+                md5($_POST['password'] == $userInfo['password'])) {
+                $userId = $userInfo['id'];
+                $isAuth = TRUE;
+            }
+        } catch (PDOException $e) {
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+
+        if ($isAuth) {
+            if (!$session_started) {
+                session_start();
+            }
+
+            $_SESSION['login'] = $_POST['login'];
+            $_SESSION['id'] = $userId;
+
+            header('Location: ./');
+        } else {
+            $error = '<div class="error">Логин или пароль неверные</div>';
+            setcookie('error', '1', time() + 24 * 60 * 60);
+            include ('login.php');
+        }
 }

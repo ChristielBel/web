@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $values['checkk'] = empty($_COOKIE['checkk_value']) ? '' : $_COOKIE['checkk_value'];
 // Сохранение в базу данных.
 
-    $user = 'uXXXXX'; // Заменить на ваш логин uXXXXX
-    $pass = 'password'; // Заменить на пароль, такой же, как от SSH
-    $db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
+    $user = 'u67287'; // Заменить на ваш логин uXXXXX
+    $pass = '3328006'; // Заменить на пароль, такой же, как от SSH
+    $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
         [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
     $statement = $db->prepare("select language from languages");
@@ -161,9 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('checkk_value', isset($_POST['checkk']) ? $_POST['checkk'] : '', time() + 30 * 24 * 60 * 60);
 
 
-    $user = 'uXXXXX'; // Заменить на ваш логин uXXXXX
-    $pass = 'password'; // Заменить на пароль, такой же, как от SSH
-    $db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
+    $user = 'u67287'; // Заменить на ваш логин uXXXXX
+    $pass = '3328006'; // Заменить на пароль, такой же, как от SSH
+    $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
         [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
     $statement = $db->prepare("select language from languages");
@@ -207,9 +207,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         setcookie('checkk_error', '', 100000);
     }
 
-    $user = 'uXXXXX';
-    $pass = 'password';
-    $db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
+    $user = 'u67287';
+    $pass = '3328006';
+    $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
         [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
     try {
