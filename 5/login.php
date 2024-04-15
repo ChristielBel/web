@@ -32,11 +32,36 @@ if ($_COOKIE[session_name()] && session_start()) {
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     ?>
 
-    <form action="" method="post">
-        <input name="login" />
-        <input name="pass" />
-        <input type="submit" value="Войти" />
-    </form>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <title>Войти</title>
+    </head>
+    <body>
+    <div class="error">
+        <?php
+        if (!empty($_COOKIE['error'])) {
+            print strip_tags($_COOKIE['error']);
+        }
+        ?>
+    </div>
+
+    <div class="container mt-5">
+        <form method="post" action="">
+            <div class="form-group">
+                <label for="login">Username</label>
+                <input type="text" class="form-control" name="login" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="button" class="btn btn-secondary ml-2">Sign out</button>
+        </form
+    </div>
+    </body>
 
     <?php
 }
@@ -52,7 +77,7 @@ else {
         $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
             [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
         try {
-            $userQuery = 'select * from usert5 where login = ? and password = ?';
+            $userQuery = 'select * from clientsid where login = ? and password = ?';
             $userStatement = $db->prepare($userQuery);
             $userStatement->execute();
 

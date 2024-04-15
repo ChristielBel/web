@@ -9,17 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Массив для временного хранения сообщений пользователю.
     $messages = array();
     if (!empty($_COOKIE['save'])) {
-            setcookie('save', '', 100000);
-            setcookie('login', '', 100000);
-            setcookie('pass', '', 100000);
-            $messages[] = 'Спасибо, результаты сохранены.';
-            if (!empty($_COOKIE['pass'])) {
-                $messages[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
+        setcookie('save', '', 100000);
+        setcookie('login', '', 100000);
+        setcookie('pass', '', 100000);
+        $messages[] = 'Спасибо, результаты сохранены.';
+        if (!empty($_COOKIE['pass'])) {
+            $messages[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
             и паролем <strong>%s</strong> для изменения данных.',
-                    strip_tags($_COOKIE['login']),
-                    strip_tags($_COOKIE['pass']));
-            }
+                strip_tags($_COOKIE['login']),
+                strip_tags($_COOKIE['pass']));
         }
+    }
 
     // Складываем признак ошибок в массив.
     $errors = array();
@@ -100,46 +100,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $validOptions[] = $row['language'];
     }
 
-     // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
-        // ранее в сессию записан факт успешного логина.
-        if (empty($errors) && !empty($_COOKIE[session_name()]) &&
-            session_start() && !empty($_SESSION['login'])) {
-            // TODO: загрузить данные пользователя из БД
-            // и заполнить переменную $values,
-            // предварительно санитизовав.
+    // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
+    // ранее в сессию записан факт успешного логина.
+    if (empty($errors) && !empty($_COOKIE[session_name()]) &&
+        session_start() && !empty($_SESSION['login'])) {
+        // TODO: загрузить данные пользователя из БД
+        // и заполнить переменную $values,
+        // предварительно санитизовав.
 
-            $user = 'u67287';
-            $pass = '3328006';
-            $db = new PDO('mysql:host=localhost;dbname=u67321', $user, $pass,
-                [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-            try {
-                $userStmt = $db->prepare("select a.* from users a join usert5 b on a.user_id = b.id where b.id = ?");
-                $userStmt->execute([$_SESSION['id']]);
-                $row = $userStmt->fetch();
+        $user = 'u67287';
+        $pass = '3328006';
+        $db = new PDO('mysql:host=localhost;dbname=u67321', $user, $pass,
+            [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+        try {
+            $userStmt = $db->prepare("select a.* from users a join usert5 b on a.user_id = b.id where b.id = ?");
+            $userStmt->execute([$_SESSION['id']]);
+            $row = $userStmt->fetch();
 
-                $values['name'] = strip_tags($_COOKIE['name_value']);
-                $values['telephone'] = strip_tags($_COOKIE['telephone_value']);
-                $values['email'] = strip_tags($_COOKIE['email_value']);
-                $values['birthday'] = strip_tags($_COOKIE['birthday_value']);
-                $values['gender'] = strip_tags($_COOKIE['gender_value']);
-                $values['biography'] = strip_tags($_COOKIE['biography_value']);
-                $values['checkk'] = strip_tags($_COOKIE['checkk_value']);
+            $values['name'] = strip_tags($_COOKIE['name_value']);
+            $values['telephone'] = strip_tags($_COOKIE['telephone_value']);
+            $values['email'] = strip_tags($_COOKIE['email_value']);
+            $values['birthday'] = strip_tags($_COOKIE['birthday_value']);
+            $values['gender'] = strip_tags($_COOKIE['gender_value']);
+            $values['biography'] = strip_tags($_COOKIE['biography_value']);
+            $values['checkk'] = strip_tags($_COOKIE['checkk_value']);
 
-                $testStatement = $db->prepare("select language from languages");
-                $testStatement->execute();
-                $pLang = [];
-                foreach ($testStatement as $row) {
-                    $pLang[] = strip_tags($row['language']);
-                }
-
-                $values['language'] = $pLang;
-            } catch (PDOException $e) {
-                print('Error : ' . $e->getMessage());
-                exit();
+            $testStatement = $db->prepare("select language from languages");
+            $testStatement->execute();
+            $pLang = [];
+            foreach ($testStatement as $row) {
+                $pLang[] = strip_tags($row['language']);
             }
 
-            printf('Вход с логином %s, id %d', $_SESSION['login'], $_SESSION['id']);
+            $values['language'] = $pLang;
+        } catch (PDOException $e) {
+            print('Error : ' . $e->getMessage());
+            exit();
         }
+
+        printf('Вход с логином %s, id %d', $_SESSION['login'], $_SESSION['id']);
+    }
 
 // Включаем содержимое файла form.php.
 // В нем будут доступны переменные $messages, $errors и $values для вывода
@@ -253,45 +253,73 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         setcookie('checkk_error', '', 100000);
     }
 
-    $user = 'u67287';
-    $pass = '3328006';
-    $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
-        [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    if (!empty($_COOKIE[session_name()]) &&
+        session_start() && !empty($_SESSION['login'])) {
+        // TODO: перезаписать данные в БД новыми данными,
+        // кроме логина и пароля.
 
-    try {
-        $userQuery = 'insert into clients 
+        try {
+            $updateStmt = $db->prepare("update users set name = ?, phone = ?, email = ?, birth_date = ?, gender = ?, biography = ? where user_id = ?");
+            $updateStmt->execute([
+                $_POST['name'],
+                $_POST['phone'],
+                $_POST['email'],
+                $_POST['birthdate'],
+                $_POST['gender'],
+                $_POST['biography'],
+                $_SESSION['id']
+            ]);
+        } catch (PDOException $e) {
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+    } else {
+
+        $id = mt_rand(1, 100000000);
+        $login = 'user' . $id;
+        $pass = substr(str_shuffle("!@#$%^&*()-_+=0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 12);
+        // Сохраняем в Cookies.
+        setcookie('login', $login);
+        setcookie('pass', $pass);
+        $user = 'u67287';
+        $pass = '3328006';
+        $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
+            [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
+        try {
+            $userQuery = 'insert into clients 
 (fullname, telephone, email, birthday, gender, biography) 
 values (?, ?, ?, ?, ?, ?)';
-        $userStatement = $db->prepare($userQuery);
-        $userStatement->execute(
-            [$_POST['name'],
-                $_POST['telephone'],
-                $_POST['email'],
-                $_POST['birthday'],
-                $_POST['gender'],
-                $_POST['biography']
-            ]);
+            $userStatement = $db->prepare($userQuery);
+            $userStatement->execute(
+                [$_POST['name'],
+                    $_POST['telephone'],
+                    $_POST['email'],
+                    $_POST['birthday'],
+                    $_POST['gender'],
+                    $_POST['biography']
+                ]);
 
-        $userId = $db->lastInsertId();
+            $userId = $db->lastInsertId();
 
-        $languageQuery = 'select id from languages where language = ?';
-        $linkQuery = 'insert into clients_languages (clients_id, languages_id) values (?, ?)';
-        $languageStatement = $db->prepare($languageQuery);
-        $linkStatement = $db->prepare($linkQuery);
-        foreach ($_POST['language'] as $language) {
-            $languageStatement->execute([$language]);
-            $languageId = $languageStatement->fetchColumn();
-            $linkStatement->execute([$userId, $languageId]);
+            $languageQuery = 'select id from languages where language = ?';
+            $linkQuery = 'insert into clients_languages (clients_id, languages_id) values (?, ?)';
+            $languageStatement = $db->prepare($languageQuery);
+            $linkStatement = $db->prepare($linkQuery);
+            foreach ($_POST['language'] as $language) {
+                $languageStatement->execute([$language]);
+                $languageId = $languageStatement->fetchColumn();
+                $linkStatement->execute([$userId, $languageId]);
+            }
+        } catch (PDOException $e) {
+            print('Error : ' . $e->getMessage());
+            exit();
         }
-    }
-    catch (PDOException $e) {
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
 
-    // Сохраняем куку с признаком успешного сохранения.
-    setcookie('save', '1');
+        // Сохраняем куку с признаком успешного сохранения.
+        setcookie('save', '1');
 
-    // Делаем перенаправление.
-    header('Location: index.php');
+        // Делаем перенаправление.
+        header('Location: index.php');
+    }
 }
