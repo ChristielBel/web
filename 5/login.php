@@ -4,9 +4,9 @@ include '/home/u67287/www/pass.php';
 header('Content-Type: text/html; charset=UTF-8');
 
 $session_started = false;
-if (session_start() && $_COOKIE[session_name()]) {
+if (session_start()) {
     $session_started = true;
-    if (!empty($_SESSION['login'])) {
+    if (!empty($_SESSION['login'])&&$_COOKIE[session_name()]) {
         header('Location: ./');
         exit();
     }
