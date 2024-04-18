@@ -1,4 +1,5 @@
 <?php
+include '/home/u67287/www/pass.php';
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
@@ -83,10 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
     $values['checkk'] = empty($_COOKIE['checkk_value']) ? '' : $_COOKIE['checkk_value'];
 // Сохранение в базу данных.
-
-    $user = 'uXXXXX'; // Заменить на ваш логин uXXXXX
-    $pass = 'password'; // Заменить на пароль, такой же, как от SSH
-    $db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
+    $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
         [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
     $statement = $db->prepare("select language from languages");
@@ -160,10 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
     setcookie('checkk_value', isset($_POST['checkk']) ? $_POST['checkk'] : '', time() + 30 * 24 * 60 * 60);
 
-
-    $user = 'uXXXXX'; // Заменить на ваш логин uXXXXX
-    $pass = 'password'; // Заменить на пароль, такой же, как от SSH
-    $db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
+    $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
         [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
     $statement = $db->prepare("select language from languages");
@@ -207,9 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         setcookie('checkk_error', '', 100000);
     }
 
-    $user = 'uXXXXX';
-    $pass = 'password';
-    $db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
+    $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
         [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
     try {

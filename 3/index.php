@@ -1,4 +1,6 @@
 <?php
+
+include '/home/u67287/www/pass.php';
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
@@ -57,10 +59,7 @@ if (!isset($_POST['check'])) {
 }
 
 // Сохранение в базу данных.
-
-$user = 'uXXXXX'; // Заменить на ваш логин uXXXXX
-$pass = 'password'; // Заменить на пароль, такой же, как от SSH
-$db = new PDO('mysql:host=localhost;dbname=uXXXXX', $user, $pass,
+$db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
 $statement = $db->prepare("select language from languages");
