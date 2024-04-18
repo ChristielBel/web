@@ -82,16 +82,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $values['email'] = empty($_COOKIE['email_value']) ? '' : strip_tags($_COOKIE['email_value']);
     $values['birthday'] = empty($_COOKIE['birthday_value']) ? '' : strip_tags($_COOKIE['birthday_value']);
     $values['gender'] = empty($_COOKIE['gender_value']) ? '' : strip_tags($_COOKIE['gender_value']);
-    $values['language'] = empty($_COOKIE['language_value']) ? '' : json_decode($_COOKIE['language_value']);
-    $values['biography'] = empty($_COOKIE['biography_value']) ? '' : strip_tags($_COOKIE['biography_value']);
-    $values['checkk'] = empty($_COOKIE['checkk_value']) ? '' : strip_tags($_COOKIE['checkk_value']);
-    $vals = json_decode($_COOKIE['language_value']);
+    $vals = json_decode(empty($_COOKIE['language_value']) ? '' : $_COOKIE['language_value']);
     if (!empty($vals)) {
         foreach ($vals as $val) {
             $val = strip_tags($val);
         }
     }
     $values['language'] = $vals;
+    $values['biography'] = empty($_COOKIE['biography_value']) ? '' : strip_tags($_COOKIE['biography_value']);
+    $values['checkk'] = empty($_COOKIE['checkk_value']) ? '' : strip_tags($_COOKIE['checkk_value']);
 
     $db = new PDO('mysql:host=localhost;dbname=u67287', $user, $pass,
         [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
@@ -102,13 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $validOptions[] = strip_tags($row['language']);
     }
 
-    // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
-    // ранее в сессию записан факт успешного логина.
     if (empty($errors) && !empty($_COOKIE[session_name()]) &&
         session_start() && !empty($_SESSION['login'])) {
-        // TODO: загрузить данные пользователя из БД
-        // и заполнить переменную $values,
-        // предварительно санитизовав.
 
         try {
             $userStmt = $db->prepare("select a.* from clients a join clientsid b on a.client_id = b.id where b.id = ?");
@@ -251,8 +245,6 @@ else {
     // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
     if (!empty($_COOKIE[session_name()]) &&
         session_start() && !empty($_SESSION['login'])) {
-        // TODO: перезаписать данные в БД новыми данными,
-        // кроме логина и пароля.
 
         try {
             $updateStmt = $db->prepare("update clients set fullname = ?, telephone = ?, email = ?, birthday = ?, gender = ?, biography = ? where client_id = ?");
