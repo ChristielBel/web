@@ -96,6 +96,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $data9 = $stmt->fetchAll(PDO::FETCH_ASSOC);
             break;
 
+        case 10:
+            $successMessage = '';
+            $dataType = $_POST['data_type'];
+            if ($dataType == 'user') {
+                // Добавление данных в таблицу user
+                $stmt = $db->prepare('INSERT INTO user (name, gender, birthday, birthplace, num_document, validity_doc) VALUES (?, ?, ?, ?, ?, ?)');
+                if ($stmt->execute([$_POST['name'], $_POST['gender'], $_POST['birthday'], $_POST['birthplace'], $_POST['num_document'], $_POST['validity_doc']])) {
+                    $successMessage = 'Данные успешно добавлены в таблицу "user".';
+                } else {
+                    $errorMessages[] = 'Ошибка при добавлении данных в таблицу "user".';
+                }
+            } elseif ($dataType == 'route') {
+                // Добавление данных в таблицу route
+                $stmt = $db->prepare('INSERT INTO route (destination_country, price_per_day, visa_price, transport_price) VALUES (?, ?, ?, ?)');
+                if ($stmt->execute([$_POST['destination_country'], $_POST['price_per_day'], $_POST['visa_price'], $_POST['transport_price']])) {
+                    $successMessage = 'Данные успешно добавлены в таблицу "route".';
+                } else {
+                    $errorMessages[] = 'Ошибка при добавлении данных в таблицу "route".';
+                }
+            } elseif ($dataType == 'trip') {
+                // Добавление данных в таблицу trip
+                $stmt = $db->prepare('INSERT INTO trip (user_id, route_id, target, start_date, duration) VALUES (?, ?, ?, ?, ?)');
+                if ($stmt->execute([$_POST['user_id'], $_POST['route_id'], $_POST['target'], $_POST['start_date'], $_POST['duration']])) {
+                    $successMessage = 'Данные успешно добавлены в таблицу "trip".';
+                } else {
+                    $errorMessages[] = 'Ошибка при добавлении данных в таблицу "trip".';
+                }
+            }
+
         default:
             break;
     }
