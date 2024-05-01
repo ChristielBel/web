@@ -9,11 +9,40 @@
         .results {
             margin-top: 50px;
         }
+        header {
+            background: #383858;
+        }
+
+        img{
+            width:200px;
+            height:200px
+        }
+        @media screen and (max-width: 576px) {
+            .btn-group {
+                flex-wrap: wrap;
+            }
+            .btn-group .btn {
+                width: 100%;
+                margin-bottom: 5px; /* Пространство между кнопками */
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1 class="mt-5 col-12">Travel Database Interface</h1>
+
+<header class="container-fluid">
+    <div class="row">
+        <div class="col-4">
+            <img class="logo img-fluid float-left" src="лого.png" alt="лого">
+        </div>
+        <div class="col-7 align-self-center text-right text-md-left pr-4">
+            <h1 class="mt-5 col-12">Travel Database Interface</h1>
+        </div>
+    </div>
+</header>
+
+
+<div class="container justify-content-center">
     <div class="row justify-content-center mt-3">
         <div class="col-12 justify-content-center">
             <div class="btn-group btn-group-lg w-100">
