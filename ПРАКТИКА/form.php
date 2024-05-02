@@ -10,7 +10,7 @@
             overflow-x: auto;
             max-width: 100%;
             margin: 0 auto;
-            width: 80%;
+            width: 100%;
         }
 
         header {
@@ -204,8 +204,6 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <!-- В зависимости от выбранного типа данных, форма будет отображаться соответственно -->
-                            <!-- Форма для добавления данных пользователя -->
                             <div id="user_form">
                                 <label for="name">Имя:</label>
                                 <input type="text" class="form-control" id="name" name="name"
@@ -239,7 +237,6 @@
                                     <input id="validity_doc" type="date" class="form-control" name="validity_doc">
                                 </div>
                             </div>
-                            <!-- Форма для добавления данных маршрута -->
                             <div id="route_form" style="display: none;">
                                 <label for="price_per_day">Цена за день:</label>
                                 <input type="text" class="form-control" id="price_per_day" name="price_per_day"
@@ -254,8 +251,6 @@
                                 <input type="text" class="form-control" id="destination_country"
                                        name="destination_country" placeholder="Введите страну назначения">
                             </div>
-
-                            <!-- Форма для добавления данных поездки -->
                             <div id="trip_form" style="display: none;">
                                 <label for="target">Цель поездки:</label>
                                 <input type="text" class="form-control" id="target" name="target"
@@ -288,8 +283,6 @@
     </div>
 </div>
 
-
-<!-- Результаты запроса -->
 <div class="container">
     <div class="row mt-5">
         <div class="col-12">
@@ -573,7 +566,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // Показываем соответствующую форму в зависимости от выбранного типа данных
     document.getElementById('data_type').addEventListener('change', function () {
         var dataType = this.value;
         document.getElementById('user_form').style.display = 'none';
