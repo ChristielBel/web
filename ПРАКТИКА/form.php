@@ -203,7 +203,7 @@
                 </form>
                 <form id="form10" class="form form9" method="post" action=""
                       style="display: <?php echo ($currentForm == 10) ? 'block' : 'none'; ?>;">
-                    <h2>Форма 10: Маршруты, где целью поездки является лечение</h2>
+                    <h2>Форма 10: Добавление данных в базу</h2>
                     <form method="post" action="">
                         <div class="form-group">
                             <label for="data_type">Выберите тип данных для добавления:</label>
