@@ -270,7 +270,7 @@
                                        placeholder="Введите ID маршрута">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Добавить</button>
+                        <button type="submit" class="btn btn-dark">Добавить</button>
                         <?php if (!empty($successMessage)): ?>
                             <div class="alert alert-success" role="alert">
                                 <?php echo $successMessage; ?>
