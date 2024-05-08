@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-<a href="admin.php">Страница для администраторов</a>
+<a href="admin.php">Я администратор</a>
 <?php
 if (!empty($messages)) {
     print('<div id="messages">');
