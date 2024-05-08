@@ -212,7 +212,7 @@ function testForErrors($db) {
     }
     setcookie('birthday_value', $_POST['birthday'], time() + 30 * 24 * 60 * 60);
 
-    if (empty($_POST['gender']) || $_POST['gender'] != 'male' && $_POST['gender'] != 'female') {
+    if (empty($_POST['gender']) || $_POST['gender'] != 'Male' && $_POST['gender'] != 'Female') {
         setcookie('gender_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     }

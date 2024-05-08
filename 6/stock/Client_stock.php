@@ -58,7 +58,7 @@ function saveToClientsId($db, $id, $login, $password){
     }
 }
 
-function saveToClients($db, $clientsId, $fullname, $telephone, $email, $birthday, $gender, $biography){
+function saveToClients($db, $clientId, $fullname, $telephone, $email, $birthday, $gender, $biography){
     try {
         $clientQuery = 'insert into clients 
 (fullname, telephone, email, birthday, gender, biography, client_id) 
@@ -71,7 +71,7 @@ values (?, ?, ?, ?, ?, ?, ?)';
                 $birthday,
                 $gender,
                 $biography,
-                $client_id
+                $clientId
             ]);
 
     } catch (PDOException $e) {
