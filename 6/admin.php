@@ -11,8 +11,8 @@ if (empty($_SERVER['PHP_AUTH_USER']) ||
     print('<h1>401 Требуется авторизация</h1>');
     exit();
 } else {
-    $clientname = $_SERVER['PHP_AUTH_USER'];
-    $admin = findAdminByUsername($db, $clientname);
+    $username = $_SERVER['PHP_AUTH_USER'];
+    $admin = findAdminByUsername($db, $username);
 
     if (empty($admin) ||
         md5($_SERVER['PHP_AUTH_PW']) != $admin['password']) {
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $clients = findALlFormData($db);
     $languages = [];
     foreach ($clients as $user) {
-        $languages[$user['user_id']] = findAllLanguagesByClient($db, $user['id']);
+        $languages[$user['client_id']] = findAllLanguagesByClient($db, $user['id']);
     }
 
     $validLanguages = findAllLanguages($db);
