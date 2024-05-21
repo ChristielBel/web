@@ -4,7 +4,8 @@ include 'stock/Client_stock.php';
 include 'stock/Lang_stock.php';
 include 'stock/Admin_stock.php';
 
-if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW'])) {
+if (empty($_SERVER['PHP_AUTH_USER']) ||
+    empty($_SERVER['PHP_AUTH_PW'])) {
     header('HTTP/1.1 401 Unanthorized');
     header('WWW-Authenticate: Basic realm="My site"');
     print('<h1>401 Требуется авторизация</h1>');
@@ -13,7 +14,8 @@ if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW'])) {
     $username = $_SERVER['PHP_AUTH_USER'];
     $admin = findAdminByUsername($db, $username);
 
-    if (empty($admin) || !password_verify($_SERVER['PHP_AUTH_PW'],$admin['password'])) {
+    if (empty($admin) ||
+        md5($_SERVER['PHP_AUTH_PW']) != $admin['password']) {
         header('HTTP/1.1 401 Unanthorized');
         header('WWW-Authenticate: Basic realm="My site"');
         print('<h1>401 Неверный пароль или логин</h1>');
@@ -33,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     if (isset($_COOKIE['edit'])) {
         setcookie('error', '', 100000);
-        print(htmlspecialchars('Данные успешно изменены.', ENT_QUOTES,'UTF-8'));
+        print('Данные успешно изменены.');
     } else {
         print('Вы успешно авторизовались и видите защищенные паролем данные.');
     }
