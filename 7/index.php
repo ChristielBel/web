@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (!empty($_COOKIE['pass'])) {
             $messages[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
         и паролем <strong>%s</strong> для изменения данных.',
-                strip_tags($_COOKIE['login']),
-                strip_tags($_COOKIE['pass']));
+                htmlspecialchars($_COOKIE['login']),
+                htmlspecialchars($_COOKIE['pass']));
         }
         setcookie('pass', '', 100000);
 

@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $id = $_POST['id'];
         updateClientById($db, $id, $_POST['fullname'], $_POST['telephone'], $_POST['email'], $_POST['birthday'], $_POST['gender'], $_POST['biography']);
         deleteLanguagesByClientId($db, $id);
-        saveLanguages($db, $_POST['languages'], $id);
+        saveLanguages($db, $_POST['language'], $id);
     }
 
     setcookie('edit', '1', time() + 24 * 60 * 60);

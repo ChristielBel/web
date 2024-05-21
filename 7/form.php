@@ -20,12 +20,12 @@
 <a href="admin.php">Я администратор</a>
 <?php
 if (!empty($messages)) {
-    print('<div id="messages">');
+    htmlspecialchars(print('<div id="messages">'),ENT_QUOTES,'UTF-8');
     // Выводим все сообщения.
     foreach ($messages as $message) {
-        print($message);
+        htmlspecialchars(print($message),ENT_QUOTES,'UTF-8');
     }
-    print('</div>');
+    htmlspecialchars(print('</div>'),ENT_QUOTES,'UTF-8');
 }
 // Далее выводим форму отмечая элементы с ошибками классом error
 // и задавая начальные значения элементов ранее сохраненными.
@@ -38,10 +38,10 @@ if (!empty($messages)) {
             <label for="fullname">ФИО:</label>
             <input type="text" class="form-control <?php
             if ($errors['fullname']) {
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             }
             ?>" value="<?php
-            print $values['fullname']
+            htmlspecialchars(print $values['fullname'],ENT_QUOTES,'UTF-8')
             ?>" placeholder="Введите ваше ФИО"
                    id="fullname" name="fullname">
         </div>
@@ -50,10 +50,10 @@ if (!empty($messages)) {
             <label for="telephone">Телефон:</label>
             <input type="tel" class="form-control <?php
             if ($errors['telephone']) {
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             }
             ?>" value="<?php
-            print $values['telephone'];
+            htmlspecialchars(print $values['telephone'],ENT_QUOTES,'UTF-8');
             ?>" placeholder="Введите ваш номер телефона"
                    id="telephone" name="telephone">
         </div>
@@ -64,10 +64,10 @@ if (!empty($messages)) {
                     type="email" class="form-control
                     <?php
             if ($errors['email']) {
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             }
             ?>" value="<?php
-            print $values['email'];
+            htmlspecialchars(print $values['email'],ENT_QUOTES,'UTF-8');
             ?>" placeholder="Введите вашу почту"
                     id="email" name="email">
         </div>
@@ -77,10 +77,10 @@ if (!empty($messages)) {
             <input id="birthday" name="birthday"
                    type="date" class="form-control <?php
             if ($errors['birthday']) {
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             }
             ?>" value="<?php
-            print $values['birthday'];
+            htmlspecialchars(print $values['birthday'],ENT_QUOTES,'UTF-8');
             ?>">
         </div>
 
@@ -88,13 +88,13 @@ if (!empty($messages)) {
             <label>Пол:</label>
             <div class="check wrapper <?php
             if ($errors['gender']) {
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             }
             ?>">
                 <div class="form-check">
                     <input type="radio" class="form-check-input" id="Male" name="gender" value="Male" <?php
                     if ($values['gender'] == 'Male') {
-                        print 'checked';
+                        htmlspecialchars(print 'checked',ENT_QUOTES,'UTF-8');
                     }
                     ?>>
                     <label class="form-check-label" for="Male">Мужской</label>
@@ -102,7 +102,7 @@ if (!empty($messages)) {
                 <div class="form-check">
                     <input type="radio" class="form-check-input" id="Female" name="gender" value="Female" <?php
                     if ($values['gender'] == 'Female') {
-                        print 'checked';
+                        htmlspecialchars(print 'checked',ENT_QUOTES,'UTF-8');
                     }
                     ?>>
                     <label class="form-check-label" for="Female">Женский</label>
@@ -114,7 +114,7 @@ if (!empty($messages)) {
             <label for="language">Любимый язык программирования:</label>
             <select multiple class="form-control <?php
             if ($errors['language']) {
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             }
             ?>" id="language" name="language[]">
                 <?php
@@ -122,14 +122,14 @@ if (!empty($messages)) {
                 if (!empty($selected)) {
                     foreach ($validOptions as $option) {
                         if (in_array($option, $selected)) {
-                            print "<option selected>$option</option>";
+                            htmlspecialchars(print "<option selected>$option</option>",ENT_QUOTES,'UTF-8');
                         } else {
-                            print "<option>$option</option>";
+                            htmlspecialchars(print "<option>$option</option>",ENT_QUOTES,'UTF-8');
                         }
                     }
                 } else {
                     foreach ($validOptions as $option) {
-                        print "<option>$option</option>";
+                        htmlspecialchars(print "<option>$option</option>",ENT_QUOTES,'UTF-8');
                     }
                 }
                 ?>
@@ -140,22 +140,22 @@ if (!empty($messages)) {
             <label for="biography">Биография:</label>
             <textarea class="form-control <?php
             if ($errors['biography']) {
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             }
             ?>" placeholder="Введите ваше сообщение"
                       id="biography" name="biography" rows="4"><?php
-                print $values['biography']
+                htmlspecialchars(print $values['biography'],ENT_QUOTES,'UTF-8')
                 ?></textarea>
         </div>
 
         <div class="form-check <?php
         if ($errors['checkk']) {
-            print 'error';
+            htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
         }
         ?>">
             <input type="checkbox" class="form-check-input" id="checkk" name="checkk" <?php
             if (!empty($values['checkk'])) {
-                print 'checked';
+               htmlspecialchars( print 'checked',ENT_QUOTES,'UTF-8');
             }
             ?>>
             <label class="form-check-label" for="checkk">С контрактом ознакомлен(а)</label>

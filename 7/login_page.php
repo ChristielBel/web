@@ -15,17 +15,17 @@
 <div class="messages">
     <?php
     if (!empty($_COOKIE['error'])) {
-        print '<div class="error">Логин или пароль неверные</div>';
+        htmlspecialchars(print '<div class="error">Логин или пароль неверные</div>',ENT_QUOTES,'UTF-8');
         setcookie('error', '', 100000);
     }
     ?>
 </div>
 <?php
 if ($session_started && !empty($_SESSION['login'])) {
-    print '<form method="post" action="" style="position: fixed; right: 10px; top: 10px">
+    htmlspecialchars(print '<form method="post" action="" style="position: fixed; right: 10px; top: 10px">
         <input hidden="hidden" name="logout" value="1">
         <button type="submit" class="btn btn-secondary ml-2">Sign out</button>
-    </form>';
+    </form>',ENT_QUOTES,'UTF-8');
 }
 ?>
 <div class="container mt-5">
@@ -34,14 +34,14 @@ if ($session_started && !empty($_SESSION['login'])) {
             <label for="login">Username</label>
             <input type="text" class="form-control <?php
             if (!empty($_COOKIE['error']))
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             ?>" name="login" id="login" placeholder="Введите логин">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" class="form-control <?php
             if (!empty($_COOKIE['error']))
-                print 'error';
+                htmlspecialchars(print 'error',ENT_QUOTES,'UTF-8');
             ?>" name="password" id="password" placeholder="Пароль">
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
