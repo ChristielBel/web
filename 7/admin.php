@@ -44,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $statistics = findCountByLanguage($db);
 
     if (isset($_COOKIE['edit'])) {
-        print('<div class="alert alert-success">Данные успешно изменены.</div>');
-        setcookie('edit', '', time() - 3600); // Удаление куки
+        setcookie('error', '', 100000);
+        print('Данные успешно изменены.');
     } else {
-        print('<div class="alert alert-info">Вы успешно авторизовались и видите защищенные паролем данные.</div>');
+        print('Вы успешно авторизовались и видите защищенные паролем данные.');
     }
 
     include('admin_page.php');

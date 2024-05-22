@@ -66,7 +66,7 @@
                         <label for="language">Любимый язык программирования:</label><br>
                         <select multiple class="form-control" name="language[]">
                             <?php foreach ($validLanguages as $language): ?>
-                                <option value="<?= $language ?>" <?= (in_array($language, $languages[$client['client_id']]) ? 'selected' : '') ?>><?= $language ?></option>
+                                <option value="<?= htmlspecialchars($language) ?>" <?= (in_array($language, $languages[$client['client_id']]) ? 'selected' : '') ?>><?= htmlspecialchars($language) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
