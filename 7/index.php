@@ -4,6 +4,14 @@ include 'stock/Client_stock.php';
 include 'stock/Lang_stock.php';
 
 header('Content-Type: text/html; charset=UTF-8');
+header("X-XSS-Protection: 1; mode=block");
+
+if (empty($_COOKIE["csrf"])) {
+    $csrf_token = bin2hex(random_bytes(32));
+    setcookie("csrf", strip_tags($csrf_token), time() + 3600);
+    header('Location: ./');
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages = array();
@@ -55,7 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     include('form.php');
 } // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 else {
-    // Проверяем ошибки.
+    if (empty($_POST["csrf"])
+        || empty($_COOKIE["csrf"])
+        || $_COOKIE["csrf"] != $_POST["csrf"]) {
+        die("CSRF валиадция не удалась");
+    }
+
     $errors = testForErrors($db);
 
     if ($errors) {
@@ -95,6 +108,10 @@ else {
 
         saveLanguages($db, $_POST['language'], $clientId);
     }
+
+    $csrf_token = bin2hex(random_bytes(32));
+    setcookie("csrf", htmlspecialchars($csrf_token), time() + 3600);
+
     setcookie('save', '1');
 
     header('Location: ./');

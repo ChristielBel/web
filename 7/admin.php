@@ -4,6 +4,9 @@ include 'stock/Client_stock.php';
 include 'stock/Lang_stock.php';
 include 'stock/Admin_stock.php';
 
+header('Content-Type: text/html; charset=UTF-8');
+header("X-XSS-Protection: 1; mode=block");
+
 if (empty($_SERVER['PHP_AUTH_USER']) ||
     empty($_SERVER['PHP_AUTH_PW'])) {
     header('HTTP/1.1 401 Unanthorized');
@@ -21,6 +24,13 @@ if (empty($_SERVER['PHP_AUTH_USER']) ||
         print('<h1>401 Неверный пароль или логин</h1>');
         exit();
     }
+}
+
+if (empty($_COOKIE["csrf"])) {
+    $csrf_token = bin2hex(random_bytes(32));
+    setcookie("csrf", htmlspecialchars($csrf_token), time() + 3600);
+    header('Location: ./admin.php');
+    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -42,6 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     include('admin_page.php');
 } else {
+    if (empty($_POST["csrf"])
+        || empty($_COOKIE["csrf"])
+        || $_COOKIE["csrf"] != $_POST["csrf"]) {
+        die("CSRF валиадция не удалась");
+    }
+
     if (isset($_POST['action']) && $_POST['action'] == 'delete') {
         $id = $_POST['id'];
         deleteLanguagesByClientId($db, $id);
@@ -52,6 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         deleteLanguagesByClientId($db, $id);
         saveLanguages($db, $_POST['language'], $id);
     }
+
+    $csrf_token = bin2hex(random_bytes(32));
+    setcookie("csrf", htmlspecialchars($csrf_token), time() + 3600);
 
     setcookie('edit', '1', time() + 24 * 60 * 60);
     header('Location: admin.php');
