@@ -33,7 +33,7 @@ if (!empty($messages)) {
 <div class="container mt-5">
     <h1 class="text-center">Form</h1>
     <form id="form" action="" method="POST">
-
+        <input hidden="hidden" name="csrf" value="<?php print $_COOKIE["csrf"]?>">
         <div class="form-group">
             <label for="fullname">ФИО:</label>
             <input type="text" class="form-control <?php

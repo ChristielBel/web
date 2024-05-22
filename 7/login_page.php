@@ -30,6 +30,7 @@ if ($session_started && !empty($_SESSION['login'])) {
 ?>
 <div class="container mt-5">
     <form method="post" action="" class="">
+        <input hidden="hidden" name="csrf" value="<?php print $_COOKIE["csrf"]?>">
         <div class="form-group">
             <label for="login">Username</label>
             <input type="text" class="form-control <?php

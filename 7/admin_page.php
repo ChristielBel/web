@@ -24,7 +24,7 @@
                 <h5> Введенные данные пользователя <?= $client['fullname'] ?> (id <?= $client['id'] ?>)</h5>
                 <form method="post" action="">
                     <input type="hidden" name="id" value="<?= $client['id'] ?>">
-
+                    <input hidden="hidden" name="csrf" value="<?php print $_COOKIE["csrf"]?>">
                     <div class="form-group mt-2">
                         <label for="fullname">ФИО:</label>
                         <input type="text" class="form-control" name="fullname" placeholder="Введите ФИО" value="<?= $client['fullname'] ?>">
@@ -72,6 +72,12 @@
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
                 </form>
+            <form class="form-inline" action="" method="post">
+                <?php
+                if (!empty($_COOKIE["csrf"])) {
+                    echo '<input type="hidden" name="csrf" value="' . $_COOKIE["csrf"] . '">';
+                }
+                ?>
                 <form method="post" action="">
                     <input type="hidden" name="id" value="<?= $client['id'] ?>">
                     <input type="hidden" name="action" value="delete">

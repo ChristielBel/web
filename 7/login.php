@@ -52,5 +52,5 @@ else {
     }
 
     $csrf_token = bin2hex(random_bytes(32));
-    setcookie("csrf", htmlspecialchars($csrf_token), time() + 3600);
+    setcookie("csrf", strip_tags($csrf_token), time() + 3600);
 }
